@@ -1,24 +1,37 @@
 import { useState } from 'react'
 import SearchBar from './Components/SearchBar'
 import Card from './Components/Card'
+import Banner from './Components/Banner'
+
 
 import './App.css'
 import youtubeApi from './API/YoutubeApi'
 import { decode } from 'html-entities'
+import TicketMasterAPI from './API/TicketMasterAPI'
 
 
 const App = () => {
 
   const [videosInfo, SetVideosInfo] = useState([])
+  const [panel, setPanel] = useState({})
 
   const handleSearch = async query => {
-    const response = await youtubeApi.get("/search", {
-      params: {
-        q: query,
-      }
-    })
-    SetVideosInfo(response.data.items)
+    const response = [
+      await youtubeApi.get("/search", {
+        params: {
+          q: query,
+        }
+      }),
+      await TicketMasterAPI.get("attractions.json?", {
+        params: {
+          keyword: query,
+        }
+      })]
+
+    SetVideosInfo(response[0].data.items)
+    setPanel(response[1])
     console.log(videosInfo)
+    console.log(panel)
   }
 
   const videos = videosInfo.map((item, index) => (
@@ -35,6 +48,9 @@ const App = () => {
   return (
     <div className="App">
       <SearchBar onSearch={handleSearch}></SearchBar>
+      {panel.data &&
+        <Banner data={panel.data}></Banner>
+      }
       {videos}
       {/* <SearchResults>
         <Banner></Banner>
