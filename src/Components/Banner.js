@@ -1,13 +1,14 @@
 import { useState } from "react"
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
-
+import Jumbotron from 'react-bootstrap/Jumbotron'
+import Button from 'react-bootstrap/Button'
 
 const Banner = (props) => {
 
     const [bandIndex, SetBandIndex] = useState(0);
-    
+
     const band = props.data._embedded.attractions[bandIndex]
-    
+
     const links = [
         {
             socialNetwork: "facebook", icon: <FaFacebook />,
@@ -24,12 +25,14 @@ const Banner = (props) => {
     ]
 
     const linkIcons = links.map((item, index) => (
-        <a
-            href={band.externalLinks[item.socialNetwork][bandIndex].url}
+        <Button
+            className="m-1"
+            variant="dark"
+            href={band.externalLinks ? band.externalLinks[item.socialNetwork][bandIndex].url : ''}
             key={`${index}link`}
         >
             {item.icon}
-        </a>
+        </Button>
     ))
 
     const bannerImage = (band) => {
@@ -43,14 +46,17 @@ const Banner = (props) => {
     }
 
     return (
-        <div>
+        <div className="d-flex flex-column align-items-center p-4" fluid>
             <img
-                height={300}
+                className="img-fluid m-4"
                 src={bannerImage(band)}
                 alt={band.name}
             />
-            <h1>{band.name}</h1>
-            {linkIcons}
+
+            <div className="d-flex flex-column flex-md-row align-items-center justify-content-md-between container-fluid">
+                <h2>{band.name}</h2>
+                <div>{linkIcons}</div>
+            </div>
         </div>
     )
 }

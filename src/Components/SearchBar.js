@@ -1,5 +1,8 @@
 import { useState } from "react"
 import { BsSearch } from 'react-icons/bs'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import InputGroup from 'react-bootstrap/InputGroup'
 
 const SearchBar = (props) => {
 
@@ -15,23 +18,30 @@ const SearchBar = (props) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <input
-                    aria-label="video-search"
+        <Form
+            inline
+            onSubmit={handleSubmit}
+            className="justify-content-center m-4"
+        >
+            <InputGroup>
+                <Form.Label htmlFor="searchBand" srOnly>Search your band</Form.Label>
+                <Form.Control
                     type="text"
                     value={searchQuery}
                     onChange={handleChange}
-                    placeholder="Enter Band name!"
+                    id="searchBand"
+                    placeholder="Search your Band!"
                 />
-                <button
-                    type="submit"
-                    aria-label="search"
-                >
-                    <BsSearch />
-                </button>
-            </div>
-        </form>
+                <InputGroup.Append>
+                    <Button
+                        variant="dark"
+                        type="submit"
+                    >
+                        <BsSearch />
+                    </Button>
+                </InputGroup.Append>
+            </InputGroup>
+        </Form>
     )
 }
 

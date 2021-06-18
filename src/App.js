@@ -1,10 +1,10 @@
 import { useState } from 'react'
+
 import SearchBar from './Components/SearchBar'
 import Card from './Components/Card'
 import Banner from './Components/Banner'
+import Container from 'react-bootstrap/Container'
 
-
-import './App.css'
 import youtubeApi from './API/YoutubeApi'
 import { decode } from 'html-entities'
 import TicketMasterAPI from './API/TicketMasterAPI'
@@ -14,24 +14,30 @@ const App = () => {
 
   const [videosInfo, SetVideosInfo] = useState([])
   const [panel, setPanel] = useState({})
+  const [alert, setAlert] = useState(false)
 
   const handleSearch = async query => {
-    const response = [
-      await youtubeApi.get("/search", {
-        params: {
-          q: query,
-        }
-      }),
-      await TicketMasterAPI.get("attractions.json?", {
-        params: {
-          keyword: query,
-        }
-      })]
+    let response;
+    try {
+      response = [
+        await youtubeApi.get("/search", {
+          params: {
+            q: query,
+          }
+        }),
+        await TicketMasterAPI.get("attractions.json?", {
+          params: {
+            keyword: query,
+          }
+        })]
+        setAlert(false)
+    } catch (e) {
+      setAlert(true);
+      return
+    }
 
     SetVideosInfo(response[0].data.items)
     setPanel(response[1])
-    console.log(videosInfo)
-    console.log(panel)
   }
 
   const videos = videosInfo.map((item, index) => (
@@ -46,21 +52,25 @@ const App = () => {
   ))
 
   return (
-    <div className="App">
+    <Container
+      fluid
+      className={`d-flex flex-column min-vh-100 p-4 align-items-center bg-secondary ${panel.data ?
+        'justify-content-between' :
+        'justify-content-center'}`}
+    >
       <SearchBar onSearch={handleSearch}></SearchBar>
-      {panel.data &&
+
+      {
+        panel.data &&
         <Banner data={panel.data}></Banner>
       }
-      {videos}
-      {/* <SearchResults>
-        <Banner></Banner>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-      </SearchResults> */}
-    </div>
+      {
+        videosInfo && videos
+      }
+      {
+        alert && <div>Ooops! Something went wrong. Try again Later :)</div>
+      }
+    </Container>
   );
 }
 
