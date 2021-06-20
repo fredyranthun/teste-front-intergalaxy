@@ -1,0 +1,18 @@
+.main-title {
+    color: #ededed;
+    font-weight: 700;
+}
+
+.banner-image {
+    box-shadow: 1px 1px 11px 4px #444444;
+    min-width: 70%;
+    max-width: 90%;
+    width: 85%;
+}
+
+
+@media (min-width: 500px) {
+    .banner-title {
+        max-width: 90%;
+    }
+}

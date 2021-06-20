@@ -1,0 +1,14 @@
+.app-container {
+    background-image: url("./pictures/edward-cisneros-jfU3_67YiwQ-unsplash.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: #171717;
+    background-blend-mode: luminosity;
+}
+
+@media (min-width: 500px) {
+    .app-container {
+        background-size: cover;
+    }
+}

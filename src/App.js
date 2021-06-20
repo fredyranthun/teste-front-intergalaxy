@@ -1,14 +1,13 @@
 import { useState } from 'react'
-
 import SearchBar from './Components/SearchBar'
 import Card from './Components/Card'
 import Banner from './Components/Banner'
 import Container from 'react-bootstrap/Container'
-
 import youtubeApi from './API/YoutubeApi'
 import { decode } from 'html-entities'
 import TicketMasterAPI from './API/TicketMasterAPI'
 
+import './App.scss'
 
 const App = () => {
 
@@ -30,7 +29,7 @@ const App = () => {
             keyword: query,
           }
         })]
-        setAlert(false)
+      setAlert(false)
     } catch (e) {
       setAlert(true);
       return
@@ -54,7 +53,7 @@ const App = () => {
   return (
     <Container
       fluid
-      className={`d-flex flex-column min-vh-100 p-4 align-items-center bg-secondary ${panel.data ?
+      className={`d-flex flex-column min-vh-100 p-4 align-items-center app-container ${panel.data ?
         'justify-content-between' :
         'justify-content-center'}`}
     >
