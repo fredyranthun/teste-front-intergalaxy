@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 import Button from 'react-bootstrap/Button'
 import './Banner.scss'
@@ -8,8 +7,12 @@ const Banner = (props) => {
 
     const bandIndex = 0;
 
-    const band = props.data._embedded.attractions[bandIndex]
-
+    let band
+    try {
+        band = props.data._embedded.attractions[bandIndex]
+    } catch (error) {
+        band = false;
+    }
 
     const links = [
         {
@@ -30,7 +33,7 @@ const Banner = (props) => {
         <Button
             className="m-1"
             variant="dark"
-            href={band.externalLinks[item.socialNetwork] ? band.externalLinks[item.socialNetwork][bandIndex].url : ''}
+            href={band && band.externalLinks && band.externalLinks[item.socialNetwork] ? band.externalLinks[item.socialNetwork][bandIndex].url : ''}
             key={`${index}link`}
         >
             {item.icon}
@@ -50,19 +53,20 @@ const Banner = (props) => {
         }
     }
 
-    return (
-        <div className="d-flex flex-column align-items-center p-4">
-            <img
-                className="img-fluid m-4 banner-image"
-                src={bannerImage(band)}
-                alt={band.name}
-            />
+    return (band && (
+            <div className="d-flex flex-column align-items-center p-4">
+                <img
+                    className="img-fluid m-4 banner-image"
+                    src={bannerImage(band)}
+                    alt={band.name}
+                />
 
-            <div className="banner-title d-flex flex-column flex-md-row align-items-center justify-content-md-between container-fluid" >
-                <h2 className="main-title">{band.name}</h2>
-                <div>{linkIcons}</div>
+                <div className="banner-title d-flex flex-column flex-md-row align-items-center justify-content-md-between container-fluid" >
+                    <h2 className="main-title">{band.name}</h2>
+                    <div>{linkIcons}</div>
+                </div>
             </div>
-        </div>
+        )
     )
 }
 
