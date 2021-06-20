@@ -1,8 +1,8 @@
 # Projeto BandFinder - Desafio Intergalaxy
 
-Este projeto consiste em um simples SPA que busca informações de determinada banda nas APIs: Youtube Data V3 e TicketMaster Discovery API.
+Este projeto consiste em um simples SPA que busca informações de determinada banda nas APIs: **Youtube Data V3** e **TicketMaster Discovery API**.
 
-Para este projeto, utilizou-se a biblioteca Frontend React.
+Para este projeto, utilizou-se a biblioteca Frontend **React**.
 
 As chaves para realização das buscas nas APIs são incluídas dentro da pasta '/src/API', onde se encontra a lógica para comunicação com as APIs.
 
@@ -24,7 +24,7 @@ Para os cards, utilizou-se a técnica no css de backdrop-filter (com Blur), para
 
 Utilizou-se também da biblioteca React Icons para os ícones de redes sociais e da barra de pesquisa.
 
-## imports
+## Imports
 
 Para as requisições e tratamento das informações recebidas pelas APIs, utilizou-se a biblioteca Axios.
 Utilizou-se também a função "decode" da biblioteca "html-entities" para tratar o texto recebido pela API Youtube Data.
@@ -33,12 +33,13 @@ Além disso, como já mencionados, os módulos node-sass, react-bootstrap e Boot
 ## Buscando informações
 
 Quando aplicamos o Submit da SearchBar, uma função assíncrona em App é chamada - handleSearch.
-Essa função envia a solicitação às APIs, e se houver retorno de erro na solitação, a lógica de renderização condicional é iniciado com o State "Alert". mostra-se na tela apenas uma mensage: "Ooops! Something went wrong. Try again Later :)".
+Essa função envia a solicitação às APIs, e se houver retorno de erro na solitação, a lógica de renderização condicional é iniciado com o State "Alert". mostra-se na tela apenas uma mensage: **"Ooops! Something went wrong. Try again Later :)".**
 
 Caso contrário, enviamos aos componentes "children" as informações coletadas das APIs.
 Essa lógica de renderização condicional é a de curto circuito do Javascript, não sendo exclusiva do React:
-"{ alert && ...}"
+    "{ alert && ...}"
 Sendo "alert" falso, o restante não entrará na renderização do componente.
+
 
 ## Youtube API
 
@@ -52,7 +53,9 @@ O TicketMaster Api retorna alguns dados importantes da banda pesquisada, como im
 
 A primeira proteção para tal, é implementada com Try and Catch, e em seguida algumas informações são testadas dentro do JSX, como por exemplo, os links de redes sociais. Caso não haja rede social específica, o botão não é acionado ao clique.
 
+## Deployment
 
+O aplicativo foi construído com a ferramenta "Vercel", e está disponível no endereço [Teste-frontend-Intergalxy](https://teste-front-intergalaxy.vercel.app/).
 
 ## Getting Started with Create React App
 
